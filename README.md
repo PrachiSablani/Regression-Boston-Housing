@@ -1,2 +1,2 @@
 # Regression-BostonHousing
-Using regression to predict housing prices in suburbs of Boston
+Using Boston housing dataset to find the statistically significant predictors using regression and model selection methods
