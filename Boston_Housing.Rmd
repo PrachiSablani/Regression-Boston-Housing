@@ -1,0 +1,313 @@
+** In this project I will use the Boston dataset that is available in the MASS package. This dataset contains information about median house value for 506 neighborhoods in Boston, MA. My aim is to find the statistically significant predictors using regression and model selection methods. **
+```{r}
+# Load standard libraries
+library(tidyverse)
+library(MASS) # Modern applied statistics functions
+library(gridExtra)
+library(sjPlot)
+```
+
+## Describing the data and variables that are part of the Boston dataset.
+
+```{r}
+#Loading the Boston data
+data(Boston, package="MASS")
+
+#Checking summary of Boston data
+summary(Boston)
+
+#Checking some observations of Boston data
+head(Boston)
+
+#Finding number of observations and variables in Boston data
+dim(Boston)
+
+#Checking missing values 
+table(is.na(Boston))
+
+#Checking missing values
+table(Boston == "")
+```
+
+### The Boston data contains 506 observations and 14 variables
+There are no missing values in the data <br>
+Boston data contains following variables - <br>
+CRIM - represents per capita crime rate by town <br>
+ZN - represents  the proportion of residential land zoned for lots over 25,000 sq.ft. <br>
+INDUS - represents the proportion of non-retail business acres per town. <br>
+CHAS - Charles River dummy variable (1 if tract bounds river; 0 otherwise) <br>
+NOX - represents nitric oxides concentration (parts per 10 million) <br>
+RM - represents average number of rooms per dwelling <br>
+AGE - represents the proportion of owner-occupied units built prior to 1940 <br>
+DIS - represents weighted distances to five Boston employment centres <br>
+RAD - representsindex of accessibility to radial highways <br>
+TAX - represents full-value property-tax rate per $10,000 <br>
+PTRATIO - represents pupil-teacher ratio by town <br>
+B - represents 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town <br>
+LSTAT - represents percentage lower status of the population <br>
+MEDV - represents median value of owner-occupied homes in $1000's  
+
+## For each predictor, fitting a simple linear regression model to predict the response. Checking in which of the models is there a statistically significant association between the predictor and the response? Creating plots to back up my assertions. 
+
+```{r}
+#Create linear model with exploratory variable crim
+m1 <- lm(medv ~ crim, data=Boston)
+#Summary of model
+summary(m1)
+ 
+#Create linear model with exploratory variable zn
+m2 <- lm(medv ~ zn, data=Boston)
+#Summary of model
+summary(m2)
+
+#Create linear model with exploratory variable indus
+m3 <- lm(medv ~ indus, data=Boston)
+#Summary of model
+summary(m3)
+
+
+#Create linear model with exploratory variable chas
+m4 <- lm(medv ~ chas, data=Boston)
+#Summary of model
+summary(m4)
+
+
+#Create linear model with exploratory variable nox
+m5 <- lm(medv ~ nox, data=Boston)
+#Summary of model
+summary(m5)
+
+
+#Create linear model with exploratory variable rm
+m6 <- lm(medv ~ rm, data=Boston)
+#Summary of model
+summary(m6)
+
+
+#Create linear model with exploratory variable age
+m7 <- lm(medv ~ age, data=Boston)
+#Summary of model
+summary(m7)
+
+
+#Create linear model with exploratory variable dis
+m8 <- lm(medv ~ dis, data=Boston)
+#Summary of model
+summary(m8)
+
+
+#Create linear model with exploratory variable rad
+m9 <- lm(medv ~ rad, data=Boston)
+#Summary of model
+summary(m9)
+
+
+#Create linear model with exploratory variable tax
+m10 <- lm(medv ~ tax, data=Boston)
+#Summary of model
+summary(m10)
+
+
+#Create linear model with exploratory variable ptratio
+m11 <- lm(medv ~ ptratio, data=Boston)
+#Summary of model
+summary(m11)
+
+
+#Create linear model with exploratory variable black
+m12 <- lm(medv ~ black, data=Boston)
+#Summary of model
+summary(m12)
+
+
+#Create linear model with exploratory variable lstat
+m13 <- lm(medv ~ lstat, data=Boston)
+#Summary of model
+summary(m13)
+
+#Plot of model 1
+a <-ggplot(Boston, aes(x=medv, y=crim)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Crime") + ggtitle("Linear model of med value & crime")
+
+
+#Plot of model 2
+b <- ggplot(Boston, aes(x=medv, y=zn)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Zoned Land") + ggtitle("Linear model of med value & zoned land")
+
+
+#Plot of model 3
+c <- ggplot(Boston, aes(x=medv, y=indus)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Non-retail business") + ggtitle("Linear model of med value & Indus")
+
+
+#Plot of model 4
+d <- ggplot(Boston, aes(x=medv, y=chas)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Charles River") + ggtitle("Linear model of med value & Ch. River")
+
+
+#Plot of model 5
+e <- ggplot(Boston, aes(x=medv, y=nox)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Nitric Oxide")+ ggtitle("Linear model of med value & nitric oxide")
+
+
+#Plot of model 6
+f <- ggplot(Boston, aes(x=medv, y=rm)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Rooms") + ggtitle("Linear model of med value & rooms")
+
+
+#Plot of model 7
+g <- ggplot(Boston, aes(x=medv, y=age)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Age") + ggtitle("Linear model of med value & age")
+
+
+#Plot of model 8
+h <- ggplot(Boston, aes(x=medv, y=dis)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Distance") + ggtitle("Linear model of med value & distance")
+
+
+#Plot of model 9
+i <- ggplot(Boston, aes(x=medv, y=rad)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Radial Highways") + ggtitle("Linear model of med value & highways")
+
+
+#Plot of model 10
+j <- ggplot(Boston, aes(x=medv, y=tax)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Property tax") + ggtitle("Linear model of med value & tax")
+
+
+#Plot of model 11
+k <- ggplot(Boston, aes(x=medv, y=ptratio)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Pupil-teacher ratio") + ggtitle("Linear model of med value & ptratio")
+
+
+#Plot of model 12
+l <-ggplot(Boston, aes(x=medv, y=black)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Blacks")+ ggtitle("Linear model of med value & blacks")
+
+
+#Plot of model 13
+m <- ggplot(Boston, aes(x=medv, y=lstat)) + geom_point() + geom_smooth(method="lm") + xlab("Median Value") + ylab("Lower Status") + ggtitle("Linear model of med value & status")
+
+#PLotting first 4 models
+grid.arrange(a,b,c,d, ncol=2)
+
+#PLotting next 4 models
+grid.arrange(e,f,g,h, ncol=2)
+ 
+#PLotting next 4 models
+grid.arrange(i,j,k,l,m, ncol=3)
+```
+From the summary of multiple models, it can be observed that p-values of all the variables are less than 0.05, hence we can reject the null hypothesis for all. So, all the variables looks statistically significant.
+
+However, if we check the multiple R-squared value, the value of 'lstat' and 'rm' variables are 0.5441 and 0.4835 which are comparatively higher than the R-squared value of other variables. 
+From the plot of rooms('rm') with median values, it can be observed that the plot is almost linear with a few outliers. And from the plot of lower status('lm') variable with median value, it can be observed that points are less scattered around the line as compared to other plots. <br>
+
+Hence, rooms('rm') and lower status('lstat') can be considered as the statistically significant variables.
+
+## Fitting a multiple regression model to predict the response using all of the predictors. Checking for which predictors can I can reject the null hypothesis.
+```{r}
+#Creating multiple regression model with all the predictors
+multiplemodel <- lm(medv ~ ., data=Boston)
+
+#Summary of multiple regression model
+summary(multiplemodel)
+```
+In the summary of multiple regression model, the multiple R-squared value is 0.7406 which is higher than any of the linear models created in the 3rd question. Thus, this model is better than linear models. <br>
+
+The intercept shows that when none of the variables are considered, the median value of homes is in $1000 is 36.4594884. <br>
+Also, it can be observed that the intercepts of some variables has a positive influence on median values of homes while some variables has negative influence on them. <br>
+Specially, when one unit of nitric oxides concentration is increased, the median value of homes is decreased by 17.7666112.<br>
+
+Null hypothesis test - From the above summary, I found that the p-value of 'indus' and 'age' variable are more than the significance level i.e 0.05. Hence, we cannot reject the null hypothesis for these two variables. <br>
+For rest of the variables, the p-values are less than the significance level i.e 0.05, so we can reject the null hypothesis.
+
+## Comparing the linear and multiple regression models created above.Creating a plot displaying the univariate regression coefficients on the x-axis and the multiple regression coefficients on the y-axis. Using this visualization to support my response.
+
+```{r}
+#Creating a vector of univariate regression coefficients
+Univariate_var <- c(coef(m1)[2],coef(m2)[2],coef(m3)[2],coef(m4)[2],coef(m5)[2],coef(m6)[2],coef(m7)[2],coef(m8)[2],coef(m9)[2],coef(m10)[2],coef(m11)[2],coef(m12)[2],coef(m13)[2])
+
+#Creating a vector of multiple regression coefficients
+Multiple_var <- c(coefficients(multiplemodel)[2:14])
+
+#Creating a data frame of univariate & multiple regression coefficients
+Allcoeff <- cbind.data.frame(Univariate_var, Multiple_var)
+
+#Creating a plot to display univariate & multiple regression coefficients
+ggplot(Allcoeff, aes(x=Univariate_var, y=Multiple_var)) + geom_point(aes(color=row.names(Allcoeff))) + geom_abline(slope=1, intercept = 0) + xlab("Univariate regression coefficients") + ylab("Multiple regression coefficients") + ggtitle("Univariate & multiple regression coefficients")
+
+```
+From the visualization, 3 significant outliers can be observed. These variables are 'rm', 'chas' and 'nox'. The values of univariate regression coefficients and multiple regression coefficients for these three variables are quite different. 
+
+## Checking the non-linear association between any of the predictors and the response. 
+```{r}
+#Using poly function to check non-linearity between predictors and the response
+poly1 <- lm(medv ~ poly(crim,3), data=Boston)
+
+poly2 <- lm(medv ~ poly(zn,3), data=Boston)
+
+poly3 <- lm(medv ~ poly(indus,3), data=Boston)
+
+poly5 <- lm(medv ~ poly(nox,3), data=Boston)
+
+poly6 <- lm(medv ~ poly(rm,3), data=Boston)
+
+poly7 <- lm(medv ~ poly(age,3), data=Boston)
+
+poly8 <- lm(medv ~ poly(dis,3), data=Boston)
+
+poly9 <- lm(medv ~ poly(rad,3), data=Boston)
+
+poly10 <- lm(medv ~ poly(tax,3), data=Boston)
+
+poly11 <- lm(medv ~ poly(ptratio,3), data=Boston)
+
+poly12 <- lm(medv ~ poly(black,3), data=Boston)
+
+poly13 <- lm(medv ~ poly(lstat,3), data=Boston)
+
+tab_model(poly1, poly2, poly3, poly5, poly6, poly7, poly8, poly9, poly10, poly11, poly12, poly13)
+```
+Analysis of non-linear association -
+Crim - All p-values are less than 0.05, so there is non-linear relation between crim and medv<br>
+Zn - All p-values are less than 0.05, so there is non-linear relation between zn and medv<br>
+Indus - All p-values are less than 0.05, so there is non-linear relation between indus and medv<br>
+Nox - The p-value for linear and quadratic relation is greater than 0.05, so there is some non-linear relation between nox and medv<br>
+Rm -  All p-values are less than 0.05, so there is non-linear relation between rm and medv<br>
+Age -  The p-value for linear and quadratic relation is greater than 0.05, so there is some non-linear relation between age and medv<br>
+Dis - All p-values are less than 0.05, so there is non-linear relation between dis and medv<br>
+Rad - All p-values are less than 0.05, so there is non-linear relation between rad and medv<br>
+Tax - The p-values of non-linear relations are greater than 0.05, so there is a linear relation between tax and medv<br>
+Ptrtaio - The p-values of non-linear relations are greater than 0.05, so there is a linear relation between ptratio and medv<br>
+Black - The p-values of non-linear relations are greater than 0.05, so there is a linear relation between black and medv<br>
+Lstat -  All p-values are less than 0.05, so there is non-linear relation between rad and medv
+
+## Performing a stepwise model selection procedure to determine the bets fit model. Checking the difference of this model from the previous multivariate model?
+```{r}
+#Using stepAIC function to determine the bets fit model
+bestmodel <- stepAIC(multiplemodel, trace=FALSE)
+
+bestmodel$anova
+
+summary(bestmodel)
+#Checking Bayesian information criterion
+BIC(bestmodel)
+BIC(multiplemodel)
+
+#Checking Akaike information criterion
+AIC(bestmodel)
+AIC(multiplemodel)
+```
+The stepAIC takes forward selection and backward elimination methods into consideration to find the best fit model. It can be observed that the best fit model has removed the 'age' and 'indus' variable from the multiple regression model.
+
+The Multiple R-squared value for the best fit and mutiple regression model is same i.e. 0.7406 <br>
+
+Comparing bayesian information criterion(BIC) - The BIC of best fit model is 3078.671 and BIC of multiple model in 4th question is 3091.007. Hence, best fit model is better.<br>
+
+Comparing Akaike information criterion (AIC) - The AIC of best fit model is 3023.726 and AIC of multiple model in 4th question is 3027.609. Hence, best fit model is better. 
+
+## Evaluating the statistical assumptions in the regression analysis from previous question by performing a basic analysis of model residuals and any unusual observations.
+```{r}
+#Analysis of model residuals
+plot(bestmodel)
+```
+
+Residuals are helpful in evaluating how well a linear model fits a data set.<br>
+From the Residual vs Fitted plot it can be observed that there is some curvature in the
+scatterplot of the residuals. So, using a straight line to model these data is not enough.<br>
+
+From the above Normal Q-Q plot of residuals, it can be observed that the points towards the right side are deviating from the line and there are few outliers at point 373,372 and 369. So, the linear model is not exactly normal. <br>
+
+The Scale-Location plot represents whether our residuals are spread equally along the predictor range. From the plot, we observe that line has a curve and it goes down in the middle. It goes down because the residuals for those predictor values are more spread out. Thus, we have non-uniform variance.<br>
+
+The Residuals vs. Leverage plots enables us to evaluate influential data points the model. Since, there are no points outside the red dashed Cook’s distance line, our plot doesn’t show any influential cases.<br>
+
+In conclusion, we observed that all the conditions for the least squares line are not met. So, the best fit model(7th question) might not be a linear model.
